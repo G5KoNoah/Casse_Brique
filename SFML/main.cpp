@@ -1,9 +1,15 @@
+#include "GameObject.h"
+
 #include <SFML/Graphics.hpp>
 
 int main(int argc, char** argv)
 {
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+    int heightScreen = desktopMode.height;
+    int widthScreen = desktopMode.width;
     //Création d'une fenêtre
-    sf::RenderWindow oWindow(sf::VideoMode(640, 480), "SFML");
+    sf::RenderWindow oWindow(desktopMode, "Breakout", sf::Style::Default); 
+    oWindow.setFramerateLimit(60);
 
     //Création d'un cercle de radius 100
     sf::CircleShape oCircle(100.f);
@@ -16,10 +22,14 @@ int main(int argc, char** argv)
     //Création d'un rectangle de taille 50, 50
     sf::RectangleShape oRectangle(sf::Vector2f(50.f, 50.f));
     //A la position 100, 100
-    oCircle.setPosition(100.f, 100.f);
+    oRectangle.setPosition(100.f, 100.f);
     //Et de couleur rouge
     oRectangle.setFillColor(sf::Color::Red);
-
+    int gameWidth = widthScreen / 3;
+   
+    GameObject* game = new GameObject(gameWidth, 0, gameWidth, heightScreen, sf::Color::White);
+    GameObject* rectangle = new GameObject(0, 0, 50, 150, sf::Color::Red);
+    GameObject* circle = new GameObject(70, 60, 100, sf::Color::Yellow);
     //GameLoop
     while (oWindow.isOpen())
     {
@@ -33,11 +43,12 @@ int main(int argc, char** argv)
 
         //UPDATE
 
+
         //DRAW
         oWindow.clear();
-
-        oWindow.draw(oCircle);
-        oWindow.draw(oRectangle);
+        oWindow.draw(*rectangle->oShape);
+        oWindow.draw(*circle->oShape);
+        oWindow.draw(*game->oShape);
 
         oWindow.display();
     }
