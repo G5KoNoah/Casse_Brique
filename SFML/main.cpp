@@ -31,6 +31,8 @@ int main(int argc, char** argv)
     GameObject* rectangle = new GameObject(0, 0, 50, 150, sf::Color::Red);
     GameObject* circle = new GameObject(70, 60, 100, sf::Color::Yellow);
     //GameLoop
+    sf::Clock oClock;
+    int fDeltaTime = 0;
     while (oWindow.isOpen())
     {
         //EVENT
@@ -49,8 +51,9 @@ int main(int argc, char** argv)
         oWindow.draw(*rectangle->oShape);
         oWindow.draw(*circle->oShape);
         oWindow.draw(*game->oShape);
-
+        rectangle->Move(fDeltaTime);
         oWindow.display();
+        fDeltaTime = oClock.restart().asSeconds();
     }
 
     return 0;

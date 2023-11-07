@@ -17,4 +17,5 @@ public:
 
 	GameObject(int posX, int posY, int sA, int sB, sf::Color color);
 	GameObject(int posX, int posY, int rad, sf::Color color);
+	void Move(int fDeltaTime);
 };

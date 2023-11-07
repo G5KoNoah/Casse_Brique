@@ -7,7 +7,7 @@ GameObject::GameObject(int posX, int posY, int sA, int sB, sf::Color color) {
 	sizeHeight = sB;
 	oColor = color;
 	oShape = new sf::RectangleShape(sf::Vector2f(size, sizeHeight));
-	oShape->setPosition(posX, posY);
+	oShape->setPosition(positionX, positionY);
 	oShape->setFillColor(oColor);
 }
 
@@ -20,6 +20,10 @@ GameObject::GameObject(int posX, int posY, int rad, sf::Color color) {
 	oColor = color;
 
 	oShape = new sf::CircleShape(rad);
-	oShape->setPosition(posX, posY);
+	oShape->setPosition(positionX, positionY);
 	oShape->setFillColor(oColor);
+}
+
+void GameObject::Move(int fDeltatime ) {
+
 }
