@@ -28,13 +28,18 @@ int main(int argc, char** argv)
     int gameWidth = widthScreen / 3;
    
     GameObject* game = new GameObject(gameWidth, 0, gameWidth, heightScreen, sf::Color::White);
-    GameObject* rectangle = new GameObject(0, 0, 50, 150, sf::Color::Red);
-    GameObject* circle = new GameObject(70, 60, 100, sf::Color::Yellow);
+    GameObject* rectangle = new GameObject((gameWidth*1.5)-25, heightScreen-150, 50, 150, sf::Color::Red);
+    GameObject* circle = new GameObject((gameWidth * 1.5) - 25, heightScreen - 150, 50, sf::Color::Yellow);
+
+
     //GameLoop
     sf::Clock oClock;
-    int fDeltaTime = 0;
+    float fDeltaTime = 0;
+    bool fire = false;
+    sf::Vector2i localPosition;
     while (oWindow.isOpen())
     {
+        localPosition = sf::Mouse::getPosition(oWindow);
         //EVENT
         sf::Event oEvent;
         while (oWindow.pollEvent(oEvent))
@@ -42,16 +47,25 @@ int main(int argc, char** argv)
             if (oEvent.type == sf::Event::Closed)
                 oWindow.close();
         }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !fire) {
 
+            fire = true;
+        }
         //UPDATE
 
 
-        //DRAW
         oWindow.clear();
-        oWindow.draw(*rectangle->oShape);
-        oWindow.draw(*circle->oShape);
         oWindow.draw(*game->oShape);
-        rectangle->Move(fDeltaTime);
+        oWindow.draw(*rectangle->oShape);
+        if (fire) {
+            circle->ObjectMove(fDeltaTime, localPosition, widthScreen, heightScreen);
+            oWindow.draw(*circle->oShape);
+        }
+        //DRAW
+
+ 
+
+        rectangle->ObjectRotate(localPosition,0.5, 1);
         oWindow.display();
         fDeltaTime = oClock.restart().asSeconds();
     }
