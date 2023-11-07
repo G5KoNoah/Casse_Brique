@@ -1,7 +1,7 @@
 #include "GameObject.h"
-
+#include <iostream>
 #include <SFML/Graphics.hpp>
-
+#include <vector>
 int main(int argc, char** argv)
 {
     sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
@@ -26,11 +26,18 @@ int main(int argc, char** argv)
     //Et de couleur rouge
     oRectangle.setFillColor(sf::Color::Red);
     int gameWidth = widthScreen / 3;
-   
-    GameObject* game = new GameObject(gameWidth, 0, gameWidth, heightScreen, sf::Color::White);
-    GameObject* rectangle = new GameObject((gameWidth*1.5)-25, heightScreen-150, 50, 150, sf::Color::Red);
-    GameObject* circle = new GameObject((gameWidth * 1.5) - 25, heightScreen - 150, 10, sf::Color::Yellow);
+    
 
+    GameObject* borderLeft = new GameObject(0, 0, gameWidth, heightScreen, sf::Color::White, 0, 0);
+    GameObject* borderRight = new GameObject(gameWidth*2, 0, gameWidth, heightScreen, sf::Color::White, 0, 0);
+    GameObject* borderTop = new GameObject(gameWidth , 0, gameWidth, -10, sf::Color::Red, 0, 0);
+    GameObject* borderBottom = new GameObject(gameWidth, heightScreen, gameWidth, 10, sf::Color::Red, 0, 0);
+
+    vector<GameObject> game = {*borderLeft, *borderRight, *borderBottom, *borderTop};
+
+    GameObject* canon = new GameObject((gameWidth*1.5)-25, heightScreen-150, 50, 150, sf::Color::Red, 0.5, 1);
+    GameObject* circle = new GameObject((gameWidth * 1.5) - 25, heightScreen - 150, 10, sf::Color::Yellow);
+    GameObject* rectangleCollision = new GameObject((gameWidth * 1.4) - 25, heightScreen - 150, 50, 150, sf::Color::Red,0,0);
 
     //GameLoop
     sf::Clock oClock;
@@ -49,26 +56,31 @@ int main(int argc, char** argv)
                 oWindow.close();
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !fire) {
+            circle = new GameObject((gameWidth * 1.5) - 25, heightScreen - 150, 10, sf::Color::Yellow);
             directionBall = localPosition;
             circle->setDirectionX = directionBall.x - circle->positionX;
             circle->setDirectionY = directionBall.y - circle->positionY;
             fire = true;
         }
-        //UPDATE
 
-
+        //Draw
         oWindow.clear();
-        oWindow.draw(*game->oShape);
-        oWindow.draw(*rectangle->oShape);
+        for (int i = 0; i < game.size();i++) {
+            oWindow.draw(*game[i].oShape);
+            if (circle->Collision(game[i].oShape)) {
+                circle->Bounce();
+            }
+        }
+
+        oWindow.draw(*canon->oShape);
+        oWindow.draw(*rectangleCollision->oShape);
+
         if (fire) {
             circle->ObjectMove(fDeltaTime, directionBall);
             oWindow.draw(*circle->oShape);
         }
-        //DRAW
-
- 
-
-        rectangle->ObjectRotate(localPosition);
+        
+        canon->ObjectRotate(localPosition);
         oWindow.display();
         fDeltaTime = oClock.restart().asSeconds();
     }
