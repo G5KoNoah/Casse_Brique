@@ -22,7 +22,7 @@ public:
 	void ObjectMove(float fDeltaTime, sf::Vector2i direction);
 	void ObjectRotate(sf::Vector2i point);
 	bool Collision(sf::Shape* rectColl);
-	void Bounce(sf::Shape* rectColl);
+	void Bounce();
 
 private:
 	void Initialize(float posX, float posY, sf::Color color);
