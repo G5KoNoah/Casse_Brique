@@ -54,10 +54,35 @@ void GameObject::ObjectRotate(sf::Vector2i point) {
 	oShape->setRotation(deg);
 }
 
-bool GameObject::Collision(sf::Shape* rectColl) {
-	if (oShape->getGlobalBounds().intersects(rectColl->getGlobalBounds())) {
-		return true;
+bool GameObject::Collision(GameObject touchedObject) {
+	bool already = false;
+	if (objectCollision.size() != 0) {
+		for (int i = 0; objectCollision.size(); i++) {
+			if (objectCollision[i] == touchedObject.oShape) {
+				already = true;
+			}
+		}
 	}
+
+	if (oShape->getGlobalBounds().intersects(touchedObject.oShape->getGlobalBounds())) {
+
+		if (!already) {
+			Bounce(touchedObject);
+			objectCollision.push_back(touchedObject.oShape);
+		}
+
+		return true;
+
+
+
+	}
+	if (already) {
+		sf::Shape* valueToRemove = touchedObject.oShape;
+
+		objectCollision.erase(std::remove(objectCollision.begin(), objectCollision.end(), valueToRemove), objectCollision.end());
+	}
+
+
 	return false;
 }
 
@@ -67,13 +92,16 @@ void GameObject::Bounce(GameObject touchedObject) {
 		// Collision depuis le haut
 		std::cout << "Collision, verticale" << std::endl;
 		setDirectionY = -setDirectionY;
-	} else if (touchedObject.positionX > positionX || touchedObject.positionX < positionX) {
+	}
+	else if (touchedObject.positionX > positionX || touchedObject.positionX < positionX) {
 		// Collision depuis la gauche
 		std::cout << "Collision, horizontale" << std::endl;
 		setDirectionX = -setDirectionX;
 	}
 
+
 }
+
 
 //Start()
 // 
