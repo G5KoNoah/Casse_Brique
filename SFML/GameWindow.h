@@ -14,8 +14,15 @@ public:
     sf::VideoMode oVideoMode;
     int screenW;
 	int screenH;
+    int gameWidth;
 	vector<GameObject> objectList;
 	
+    sf::Clock oClock;
+    float fDeltaTime = 0;
+    bool fire = false;
+    sf::Vector2i localPosition;
+    sf::Vector2i directionBall;
+
 	GameWindow();
 };
 

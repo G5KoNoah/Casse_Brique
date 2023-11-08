@@ -16,8 +16,8 @@ GameObject::GameObject(float posX, float posY, int sA, int sB, sf::Color color, 
 
 GameObject::GameObject(float posX, float posY , int rad, sf::Color color) {
 	size = rad;
-
 	sizeHeight = NULL;
+
 	oShape = new sf::CircleShape(rad);
 	oShape->setOrigin(size, size);
 
@@ -44,8 +44,8 @@ void GameObject::ObjectMove(float fDeltatime, sf::Vector2i direction ) {
 	float normDirX = (setDirectionX) / norm;
 	float normDirY = (setDirectionY) / norm;
 
-	positionX += normDirX * fDeltatime * 500.f;
-	positionY += normDirY * fDeltatime * 500.f;
+	positionX += normDirX * fDeltatime * speed;
+	positionY += normDirY * fDeltatime * speed;
 	oShape->setPosition(positionX, positionY);
 }
 
@@ -61,16 +61,21 @@ bool GameObject::Collision(sf::Shape* rectColl) {
 	return false;
 }
 
-void GameObject::Bounce() {
-	if (setDirectionX > 0) {
+//put in Ball.cpp
+void GameObject::Bounce(GameObject touchedObject) {
+	if (touchedObject.positionY > positionY + sizeHeight || touchedObject.positionY + touchedObject.sizeHeight < positionY) {
+		// Collision depuis le haut
+		std::cout << "Collision, verticale" << std::endl;
+		setDirectionY = -setDirectionY;
+	} else if (touchedObject.positionX > positionX || touchedObject.positionX < positionX) {
 		// Collision depuis la gauche
-		std::cout << "Collision depuis la gauche" << std::endl;
-		setDirectionX = -setDirectionX ;
-	}
-	else if (setDirectionX < 0) {
-		// Collision depuis la droite
-		std::cout << "Collision depuis la droite" << std::endl;
+		std::cout << "Collision, horizontale" << std::endl;
 		setDirectionX = -setDirectionX;
 	}
 
 }
+
+//Start()
+// 
+//Stay()
+//Exit()
