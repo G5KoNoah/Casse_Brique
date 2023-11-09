@@ -11,7 +11,8 @@ typedef enum
 
 	Ball,
 	Cannon,
-	TestRectangle
+	TestRectangle,
+	TestRectangleTwo
 };
 
 GameWindow::GameWindow()
@@ -38,7 +39,8 @@ GameWindow::GameWindow()
 
 		new GameObject((gameWidth * 1.5) - 25, screenH - 150, 10, sf::Color::Yellow),//ball
 		new GameObject((gameWidth * 1.5) - 25, screenH - 150, 50, 150, sf::Color::Magenta, 0.5, 1),//cannon
-		new GameObject((gameWidth * 1.4) - 25, screenH / 4, 150, 50, sf::Color::Red, 0, 0)//colision rectangle
+		new GameObject((gameWidth * 1.4) - 25, screenH / 4, 150, 50, sf::Color::Red, 0, 0),//colision rectangle
+		new GameObject((gameWidth * 1.4) - 25, screenH / 4, 100, 100, sf::Color::Cyan, 0, 0)//testing rect 2
 	};
 }
 
@@ -60,7 +62,7 @@ void GameWindow::Display() {
 	for (int i = 0; i < objectList.size(); i++) {
 
 		oWindow->draw(*objectList[i]->oShape);
-		if (objectList[i] == objectList[Cannon]) {
+		if (objectList[i] == objectList[Cannon] || objectList[i] == objectList[Ball]) {
 			continue;
 		}else if (objectList[Ball]->Collision(objectList[i])) {
 			if (objectList[i] == objectList[BorderBottom]){
@@ -70,6 +72,11 @@ void GameWindow::Display() {
 			}else{
 				objectList[Ball]->Bounce(objectList[Ball]->side);
 			}
+		}
+		if (objectList[i] == objectList[Cannon] || objectList[i] == objectList[TestRectangleTwo]) {
+			continue;
+		}
+		else if (objectList[TestRectangleTwo]->Collision(objectList[i])) {
 		}
 	}
 

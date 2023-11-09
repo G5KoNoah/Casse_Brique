@@ -28,7 +28,7 @@ public:
 	void ObjectRotate(sf::Vector2i point);
 	bool Collision(GameObject* touchedObject);
 	void Bounce(string);
-	void StartCollision( );
+	void EnterCollision( );
 	void StayCollision( );
 	void ExitCollision( );
 	string SideCollision(GameObject* touchedObject);

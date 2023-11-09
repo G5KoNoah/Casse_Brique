@@ -23,23 +23,11 @@ int main(int argc, char** argv)
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !game.fire) {
             game.Shoot();
         }
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			// left key is pressed: move our character
-            game.objectList[4]->setDirectionX = -1;
-            game.objectList[4]->ObjectMove(game.fDeltaTime);
-		}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-			game.objectList[4]->setDirectionX = 1;
-			game.objectList[4]->ObjectMove(game.fDeltaTime);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+            delete game.objectList[7]; 
+            game.objectList[7] = new GameObject(game.localPosition.x, game.localPosition.y, 100, 100, sf::Color::Cyan, 0, 0);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            game.objectList[4]->setDirectionY = -1;
-            game.objectList[4]->ObjectMove(game.fDeltaTime);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            game.objectList[4]->setDirectionY = 1;
-            game.objectList[4]->ObjectMove(game.fDeltaTime);
-        }
+
         //Draw
         game.Display();
     }

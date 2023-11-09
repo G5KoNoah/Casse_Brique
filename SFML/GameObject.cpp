@@ -69,12 +69,16 @@ bool GameObject::Collision(GameObject* touchedObject) {
 		side = SideCollision(touchedObject);
 		if (!already) {
 			objectCollision.push_back(touchedObject);
+			EnterCollision();
 			return true;
+		}else{
+			StayCollision();
 		}
 
 
 	}else{
 		if (already) {
+			ExitCollision();
 			GameObject* valueToRemove = touchedObject;
 			objectCollision.erase(std::remove(objectCollision.begin(), objectCollision.end(), valueToRemove), objectCollision.end());
 		}
@@ -84,6 +88,18 @@ bool GameObject::Collision(GameObject* touchedObject) {
 
 	return false;
 }
+void GameObject::EnterCollision(){
+	std::cout << "Start Collision"<<endl;
+}
+
+void GameObject::StayCollision() {
+	std::cout << "Stay Collision"<<endl;
+}
+
+void GameObject::ExitCollision() {
+	std::cout << "Exit Collision"<<endl;
+}
+
 
 //put in Ball.cpp
 void GameObject::Bounce(string side) {
@@ -103,7 +119,6 @@ void GameObject::Bounce(string side) {
 
 string GameObject::SideCollision(GameObject* touchedObject){
 	if (touchedObject->positionY > positionY + sizeHeight) {
-		// Collision depuis le haut
 		std::cout << "Collision en bas" << std::endl;
 		return "bottom";
 	}
