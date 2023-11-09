@@ -79,7 +79,6 @@ void GameWindow::Display() {
 		else if (objectList[TestRectangleTwo]->Collision(objectList[i])) {
 		}
 	}
-
 	objectList[Cannon]->ObjectRotate(localPosition);
 	oWindow->display();
 
