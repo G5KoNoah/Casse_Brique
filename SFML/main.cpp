@@ -10,21 +10,36 @@ int main(int argc, char** argv)
 
     //GameLoop
 
-    while (game.oWindow.isOpen())
+    while (game.oWindow->isOpen())
     {
-		game.localPosition = sf::Mouse::getPosition(game.oWindow);
+		game.localPosition = sf::Mouse::getPosition(*game.oWindow);
         //EVENT
-        sf::Event oEvent;
 
-        while (game.oWindow.pollEvent(game.oEvent))
+        while (game.oWindow->pollEvent(game.oEvent))
         {
             if (game.oEvent.type == sf::Event::Closed)
-                game.oWindow.close();
+                game.oWindow->close();
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !game.fire) {
             game.Shoot();
         }
-
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			// left key is pressed: move our character
+            game.objectList[4]->setDirectionX = -1;
+            game.objectList[4]->ObjectMove(game.fDeltaTime);
+		}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+			game.objectList[4]->setDirectionX = 1;
+			game.objectList[4]->ObjectMove(game.fDeltaTime);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            game.objectList[4]->setDirectionY = -1;
+            game.objectList[4]->ObjectMove(game.fDeltaTime);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            game.objectList[4]->setDirectionY = 1;
+            game.objectList[4]->ObjectMove(game.fDeltaTime);
+        }
         //Draw
         game.Display();
     }

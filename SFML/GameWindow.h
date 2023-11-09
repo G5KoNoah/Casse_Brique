@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 #include "GameObject.h"
@@ -10,7 +10,7 @@ using namespace std;
 class GameWindow
 {
 public:
-	sf::RenderWindow oWindow;
+	sf::RenderWindow* oWindow;
     sf::VideoMode oVideoMode;
     sf::Clock oClock;
     sf::Event oEvent;
@@ -21,7 +21,7 @@ public:
     float fDeltaTime;;
     bool fire;
 
-	map<const char*,GameObject*> objectList;
+	vector<GameObject*> objectList;
 	
 
     sf::Vector2i localPosition;
