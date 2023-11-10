@@ -1,10 +1,13 @@
 #include "GameObject.h"
+#include "MathGeneric.h"
 
 #include <SFML/Graphics.hpp>
-#include <cmath>
+
 #include <iostream>
 #include <string>
-#define PI 3.14159265;
+
+
+
 
 GameObject::GameObject(float posX, float posY, int sA, int sB, sf::Color color, float oriX, float oriY) {
 	size = sA;
@@ -40,18 +43,16 @@ void GameObject::Initialize(float posX, float posY, sf::Color color)
 void GameObject::ObjectMove(float fDeltatime ) {
 
 
-
-	float norm = sqrt( setDirectionX *setDirectionX + setDirectionY*setDirectionY);
-	float normDirX = (setDirectionX) / norm;
-	float normDirY = (setDirectionY) / norm;
-
-	positionX += normDirX * fDeltatime * speed;
-	positionY += normDirY * fDeltatime * speed;
+	sf::Vector2f vDirection = sf::Vector2f(setDirectionX, setDirectionY);
+	vDirection = Math::Normalize(vDirection);
+	positionX += vDirection.x * fDeltatime * speed;
+	positionY += vDirection.y * fDeltatime * speed;
+	
 	oShape->setPosition(positionX, positionY);
 }
 
 void GameObject::ObjectRotate(sf::Vector2i point) {
-	float deg = atan2(point.x - positionX,-( point.y - positionY)) * 180 / PI;
+	float deg = Math::arcTan(point, positionX, positionY);
 	oShape->setRotation(deg);
 }
 
@@ -119,19 +120,19 @@ void GameObject::Bounce(string side) {
 
 string GameObject::SideCollision(GameObject* touchedObject){
 	if (touchedObject->positionY > positionY + sizeHeight) {
-		std::cout << "Collision en bas" << std::endl;
+		//std::cout << "Collision en bas" << std::endl;
 		return "bottom";
 	}
 	else if (touchedObject->positionY + touchedObject->sizeHeight < positionY) {
-		std::cout << "Collision en haut" << std::endl;
+		//std::cout << "Collision en haut" << std::endl;
 		return "up";
 
 	}else if(touchedObject->positionX > positionX){
-		std::cout << "Collision a droite" << std::endl;
+		//std::cout << "Collision a droite" << std::endl;
 		return "right";
 	}
 	else if (touchedObject->positionX < positionX) {
-		std::cout << "Collision a gauche" << std::endl;
+		//std::cout << "Collision a gauche" << std::endl;
 		return "left";
 	}
 	return "";

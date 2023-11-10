@@ -27,7 +27,7 @@ GameWindow::GameWindow()
 	fire = false;
 	//Creating window
 	oWindow = new sf::RenderWindow(desktopMode, "Breakout", sf::Style::Default);
-	oWindow->setFramerateLimit(120);
+	oWindow->setFramerateLimit(60);
 
 	objectList = {
 		//borders
@@ -73,11 +73,12 @@ void GameWindow::Display() {
 				objectList[Ball]->Bounce(objectList[Ball]->side);
 			}
 		}
-		if (objectList[i] == objectList[Cannon] || objectList[i] == objectList[TestRectangleTwo]) {
+
+		// makes the cyan test rectangle detect all collisions except his own
+		if (objectList[i] == objectList[TestRectangleTwo]) {
 			continue;
-		}
-		else if (objectList[TestRectangleTwo]->Collision(objectList[i])) {
-		}
+		}else objectList[TestRectangleTwo]->Collision(objectList[i]);
+	
 	}
 	objectList[Cannon]->ObjectRotate(localPosition);
 	oWindow->display();

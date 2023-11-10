@@ -13,7 +13,7 @@ public:
 	sf::RenderWindow* oWindow;
     sf::VideoMode oVideoMode;
     sf::Clock oClock;
-    sf::Event oEvent;
+
     
     int screenW;
 	int screenH;

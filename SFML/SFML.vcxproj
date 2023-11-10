@@ -132,11 +132,15 @@
   <ItemGroup>
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathGeneric.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MathGeneric.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
