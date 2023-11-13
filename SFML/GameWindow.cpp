@@ -45,9 +45,7 @@ GameWindow::GameWindow()
 }
 
 void GameWindow::Shoot(){
-
-		objectList[Ball]->setDirectionX = localPosition.x - objectList[Ball]->positionX;
-		objectList[Ball]->setDirectionY = localPosition.y - objectList[Ball]->positionY;
+		objectList[Ball]->setDirection(localPosition.x - objectList[Ball]->positionX, localPosition.y - objectList[Ball]->positionY);
 		fire = true;
 }
 

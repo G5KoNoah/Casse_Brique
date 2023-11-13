@@ -14,8 +14,7 @@ public:
 	int sizeHeight = 0;
 	sf::Shape* oShape;
 	sf::Color oColor;
-	int setDirectionX = 0;
-	int setDirectionY = 0;
+	sf::Vector2f vDirection;
 	float speed = 500.f;
 	std::vector<GameObject*> objectCollision ;
 	string side;
@@ -23,7 +22,8 @@ public:
 
 	GameObject(float posX, float posY, int sA, int sB, sf::Color color, float oriX, float oriY);
 	GameObject(float posX, float posY, int rad, sf::Color color);
-
+	void Draw(sf::RenderWindow& oWindow);
+	void setDirection(float fX, float fY);
 	void ObjectMove(float fDeltaTime);
 	void ObjectRotate(sf::Vector2i point);
 	bool Collision(GameObject* touchedObject);

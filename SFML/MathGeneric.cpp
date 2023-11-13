@@ -17,3 +17,12 @@ float Math::arcTan(sf::Vector2i vector, int X, int Y) {
 	float deg = atan2(vector.x - X, -(vector.y - Y)) * 180 / PI;
 	return deg;
 }
+
+bool Math::between(float value, float min, float max) {
+	if (value < max and value > min) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

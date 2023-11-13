@@ -40,11 +40,18 @@ void GameObject::Initialize(float posX, float posY, sf::Color color)
 
 }
 
+void GameObject::Draw(sf::RenderWindow& oWindow) {
+	oWindow.draw(*oShape);
+}
+
+void GameObject::setDirection(float fX, float fY) {
+	sf::Vector2f vector = sf::Vector2f(fX, fY);
+	vDirection = Math::Normalize(vector);
+}
 void GameObject::ObjectMove(float fDeltatime ) {
 
 
-	sf::Vector2f vDirection = sf::Vector2f(setDirectionX, setDirectionY);
-	vDirection = Math::Normalize(vDirection);
+	
 	positionX += vDirection.x * fDeltatime * speed;
 	positionY += vDirection.y * fDeltatime * speed;
 	
@@ -104,17 +111,17 @@ void GameObject::ExitCollision() {
 
 //put in Ball.cpp
 void GameObject::Bounce(string side) {
-	if (side=="bottom" && setDirectionY > 0) {
-		setDirectionY = -setDirectionY;
+	if (side=="bottom" && vDirection.y > 0) {
+		vDirection.y = -vDirection.y;
 	}
-	else if (side == "up" && setDirectionY < 0) {
-		setDirectionY = -setDirectionY;
+	else if (side == "up" && vDirection.y < 0) {
+		vDirection.y = -vDirection.y;
 	}
-	else if (side=="left" && setDirectionX < 0) {
-		setDirectionX = -setDirectionX;
+	else if (side=="left" && vDirection.x < 0) {
+		vDirection.x = -vDirection.x;
 	}
-	else if (side == "right" && setDirectionX > 0) {
-		setDirectionX = -setDirectionX;
+	else if (side == "right" && vDirection.x > 0) {
+		vDirection.x = -vDirection.x;
 	}
 }
 

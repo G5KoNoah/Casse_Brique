@@ -7,4 +7,5 @@
 namespace Math {
 	sf::Vector2f Normalize(sf::Vector2f);
 	float arcTan(sf::Vector2i vector, int X, int Y);
+	bool between(float value, float min, float max);
 };
