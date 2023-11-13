@@ -16,6 +16,10 @@ int main(int argc, char** argv)
         inputs.ButtonPressed();
         //Draw
         game.Display();
+        //Calculate
+        game.GameLoop();
+
+        game.fDeltaTime = game.oClock.restart().asSeconds();
     }
 
     return 0;

@@ -52,22 +52,33 @@ void GameWindow::Shoot(){
 void GameWindow::Display() {
 	oWindow->clear();
 
+	for (int i = 0; i < objectList.size(); i++) {
+
+		objectList[i]->Draw(*oWindow);
+	}
+	objectList[Cannon]->ObjectRotate(localPosition);
+	oWindow->display();
+
+}
+
+void GameWindow::GameLoop() {
+
 	if (fire) {
 		objectList[Ball]->ObjectMove(fDeltaTime);
-		oWindow->draw(*objectList[Ball]->oShape);
 	}
 
 	for (int i = 0; i < objectList.size(); i++) {
 
-		oWindow->draw(*objectList[i]->oShape);
 		if (objectList[i] == objectList[Cannon] || objectList[i] == objectList[Ball]) {
 			continue;
-		}else if (objectList[Ball]->Collision(objectList[i])) {
-			if (objectList[i] == objectList[BorderBottom]){
+		}
+		else if (objectList[Ball]->Collision(objectList[i])) {
+			if (objectList[i] == objectList[BorderBottom]) {
 				fire = false;
 				delete objectList[Ball];
 				objectList[Ball] = new GameObject((gameWidth * 1.5) - 25, screenH - 150, 10, sf::Color::Yellow);
-			}else{
+			}
+			else {
 				objectList[Ball]->Bounce(objectList[Ball]->side);
 			}
 		}
@@ -75,11 +86,9 @@ void GameWindow::Display() {
 		// makes the cyan test rectangle detect all collisions except his own
 		if (objectList[i] == objectList[TestRectangleTwo]) {
 			continue;
-		}else objectList[TestRectangleTwo]->Collision(objectList[i]);
-	
-	}
-	objectList[Cannon]->ObjectRotate(localPosition);
-	oWindow->display();
+		}
+		else objectList[TestRectangleTwo]->Collision(objectList[i]);
 
-	fDeltaTime = oClock.restart().asSeconds();
+	}
+
 }

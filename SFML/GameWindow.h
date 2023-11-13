@@ -30,5 +30,6 @@ public:
     
     void Shoot();
     void Display();
+    void GameLoop();
 };
 
