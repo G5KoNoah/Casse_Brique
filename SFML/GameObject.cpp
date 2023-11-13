@@ -110,22 +110,6 @@ void GameObject::ExitCollision() {
 }
 
 
-//put in Ball.cpp
-void GameObject::Bounce(string side) {
-	if (side=="bottom" && vDirection.y > 0) {
-		vDirection.y = -vDirection.y;
-	}
-	else if (side == "up" && vDirection.y < 0) {
-		vDirection.y = -vDirection.y;
-	}
-	else if (side=="left" && vDirection.x < 0) {
-		vDirection.x = -vDirection.x;
-	}
-	else if (side == "right" && vDirection.x > 0) {
-		vDirection.x = -vDirection.x;
-	}
-}
-
 string GameObject::SideCollision(GameObject* touchedObject){
 	if (touchedObject->positionY > positionY + sizeHeight) {
 		//std::cout << "Collision en bas" << std::endl;

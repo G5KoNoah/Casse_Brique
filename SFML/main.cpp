@@ -13,11 +13,14 @@ int main(int argc, char** argv)
 
     while (game.oWindow->isOpen())
     {
+        //EVENTS
         inputs.ButtonPressed();
-        //Draw
+
+        //UPDATES
+        game.Update();
+
+        //DRAW
         game.Display();
-        //Calculate
-        game.GameLoop();
 
         game.fDeltaTime = game.oClock.restart().asSeconds();
     }

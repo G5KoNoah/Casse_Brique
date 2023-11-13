@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameObject.h"
+#include "Ball.h"
+#include "Brick.h"
 
 using namespace std;
 
@@ -18,11 +20,13 @@ public:
     int screenW;
 	int screenH;
     int gameWidth;
-    float fDeltaTime;;
+    float fDeltaTime;
     bool fire;
+    Ball* ball;
+    GameObject* cannon;
 
-	vector<GameObject*> objectList;
-	
+	std::map<std::string, GameObject*> borderList;
+    vector<Brick*> brickList;
 
     sf::Vector2i localPosition;
 
@@ -30,6 +34,6 @@ public:
     
     void Shoot();
     void Display();
-    void GameLoop();
+    void Update();
 };
 

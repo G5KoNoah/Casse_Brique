@@ -21,8 +21,4 @@ void InputManager::ButtonPressed(){
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !game->fire) {
 		game->Shoot();
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-		delete game->objectList[7];
-		game->objectList[7] = new GameObject(game->localPosition.x, game->localPosition.y, 100, 100, sf::Color::Cyan, 0, 0);
-	}
 }
