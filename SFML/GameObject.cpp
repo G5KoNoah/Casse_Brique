@@ -44,10 +44,11 @@ void GameObject::Draw(sf::RenderWindow& oWindow) {
 	oWindow.draw(*oShape);
 }
 
-void GameObject::setDirection(float fX, float fY) {
+void GameObject::SetDirection(float fX, float fY) {
 	sf::Vector2f vector = sf::Vector2f(fX, fY);
 	vDirection = Math::Normalize(vector);
 }
+
 void GameObject::ObjectMove(float fDeltatime ) {
 
 

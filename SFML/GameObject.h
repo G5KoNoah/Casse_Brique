@@ -23,7 +23,7 @@ public:
 	GameObject(float posX, float posY, int sA, int sB, sf::Color color, float oriX, float oriY);
 	GameObject(float posX, float posY, int rad, sf::Color color);
 	void Draw(sf::RenderWindow& oWindow);
-	void setDirection(float fX, float fY);
+	void SetDirection(float fX, float fY);
 	void ObjectMove(float fDeltaTime);
 	void ObjectRotate(sf::Vector2i point);
 	bool Collision(GameObject* touchedObject);
