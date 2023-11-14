@@ -22,3 +22,7 @@ void Brick::ColorSetOnHP() {
 	oShape->setFillColor(oColor);
 
 }
+
+Brick::~Brick() {
+
+}
