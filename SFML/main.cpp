@@ -10,6 +10,7 @@ int main(int argc, char** argv)
     GameWindow game;
     InputManager inputs(&game) ;
     //GameLoop
+    game.LoadLevel1();
 
     while (game.oWindow->isOpen())
     {
@@ -27,4 +28,3 @@ int main(int argc, char** argv)
 
     return 0;
 }
-

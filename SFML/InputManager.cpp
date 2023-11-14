@@ -19,6 +19,7 @@ void InputManager::ButtonPressed(){
 			game->oWindow->close();
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !game->fire) {
-		game->Shoot();
+		if (game->localPosition.y < game->cannon->positionY)
+			game->Shoot();
 	}
 }

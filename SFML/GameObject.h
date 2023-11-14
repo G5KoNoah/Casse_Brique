@@ -31,6 +31,7 @@ public:
 	virtual void StayCollision();
 	virtual void ExitCollision();
 	string SideCollision(GameObject* touchedObject);
+	void setTexture(sf::Texture &texture);
 
 private:
 	void Initialize(float posX, float posY, sf::Color color);

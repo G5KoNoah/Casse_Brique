@@ -130,7 +130,6 @@ string GameObject::SideCollision(GameObject* touchedObject){
 	return "";
 }
 
-//Start()
-// 
-//Stay()
-//Exit()
+void GameObject::setTexture(sf::Texture &texture){
+	oShape->setTexture(&texture);
+}

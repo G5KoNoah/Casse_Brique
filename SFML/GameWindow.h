@@ -16,7 +16,11 @@ public:
     sf::VideoMode oVideoMode;
     sf::Clock oClock;
 
-    
+	sf::Texture textureCannon;
+	sf::Texture textureBall;
+	sf::Texture backGround1;
+	sf::Texture backGround2;
+
     int screenW;
 	int screenH;
     int gameWidth;
@@ -35,5 +39,6 @@ public:
     void Shoot();
     void Display();
     void Update();
+    void LoadLevel1();
 };
 

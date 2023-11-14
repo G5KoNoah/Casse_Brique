@@ -12,9 +12,9 @@ void Brick::EnterCollision() {
 
 void Brick::ColorSetOnHP() {
 	if (hp == 1)
-		oColor = sf::Color::Yellow;
-	else if (hp == 2)
 		oColor = sf::Color::Red;
+	else if (hp == 2)
+		oColor = sf::Color::Yellow;
 	else if (hp == 3)
 		oColor = sf::Color::Blue;
 	else
