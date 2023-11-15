@@ -16,6 +16,9 @@ public:
     sf::VideoMode oVideoMode;
     sf::Clock oClock;
 
+    map<string, sf::Texture> textureMap;
+
+    sf::Texture texture;
 	sf::Texture textureCannon;
 	sf::Texture textureBall;
 	sf::Texture backGround1;
@@ -35,10 +38,10 @@ public:
     sf::Vector2i localPosition;
 
 	GameWindow();
-    
+
+    bool loadLevelFromTxt(const string& filename);
     void Shoot();
     void Display();
     void Update();
-    void LoadLevel1();
 };
 

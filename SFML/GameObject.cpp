@@ -9,34 +9,34 @@
 
 
 
-GameObject::GameObject(float posX, float posY, int sA, int sB, sf::Color color, float oriX, float oriY) {
+GameObject::GameObject(float posX, float posY, int sA, int sB, sf::Color color, string filename, float oriX, float oriY) {
 	size = sA;
 	sizeHeight = sB;
 
 	oShape = new sf::RectangleShape(sf::Vector2f(size, sizeHeight));
 	oShape->setOrigin(oriX * size, oriY * sizeHeight);
-	Initialize(posX, posY, color);
+	Initialize(posX, posY, color, filename);
 }
 
-GameObject::GameObject(float posX, float posY , int rad, sf::Color color) {
+GameObject::GameObject(float posX, float posY , int rad, sf::Color color, string filename) {
 	size = rad;
 	sizeHeight = NULL;
 
 	oShape = new sf::CircleShape(rad);
 	oShape->setOrigin(size, size);
 
-	Initialize(posX, posY, color);
+	Initialize(posX, posY, color, filename);
 
 }
 
-void GameObject::Initialize(float posX, float posY, sf::Color color)
+void GameObject::Initialize(float posX, float posY, sf::Color color, string filename)
 {	
 	positionX = posX;
 	positionY = posY;
 	oColor = color;
 	oShape->setPosition(positionX, positionY);
 	oShape->setFillColor(oColor);
-
+	textureFilename = filename;
 
 }
 
@@ -75,10 +75,10 @@ bool GameObject::Collision(GameObject* touchedObject) {
 	}
 
 	if (oShape->getGlobalBounds().intersects(touchedObject->oShape->getGlobalBounds())) {
-		side = SideCollision(touchedObject);
+		string side = SideCollision(touchedObject);
 		if (!already) {
 			objectCollision.push_back(touchedObject);
-			EnterCollision();
+			EnterCollision(side);
 			return true;
 		}else{
 			StayCollision();
@@ -97,7 +97,7 @@ bool GameObject::Collision(GameObject* touchedObject) {
 
 	return false;
 }
-void GameObject::EnterCollision(){
+void GameObject::EnterCollision(string side){
 	std::cout << "Start Collision"<<endl;
 }
 
@@ -124,12 +124,28 @@ string GameObject::SideCollision(GameObject* touchedObject){
 		return "right";
 	}
 	else if (touchedObject->positionX < positionX) {
-		//std::cout << "Collision a gauche" << std::endl;
+		//std::cout << "Collision a gauche" << std::endl;S
 		return "left";
 	}
 	return "";
 }
 
-void GameObject::setTexture(sf::Texture &texture){
-	oShape->setTexture(&texture);
+void GameObject::setObjectTexture(map<string,sf::Texture>& textureMap){
+	if (!textureFilename.empty()) {
+		if (textureMap.count(textureFilename) == 0) {
+			sf::Texture tempTexture;
+			if (!tempTexture.loadFromFile("img/" + textureFilename))
+				{
+					std::cout << "texture error";
+				}
+			tempTexture.setSmooth(true);
+			textureMap[textureFilename] = tempTexture;
+			textureMap.insert({ textureFilename , tempTexture });
+		}
+		texture = &textureMap[textureFilename];
+		oShape->setTexture(texture);
+	}
+	else {
+		std::cout << "couldnt texture";
+	}
 }

@@ -9,7 +9,7 @@ InputManager::InputManager(GameWindow* window){
 	game = window;
 }
 
-void InputManager::ButtonPressed(){
+void InputManager::EventCheck(){
 	game->localPosition = sf::Mouse::getPosition(*game->oWindow);
 	//EVENT
 

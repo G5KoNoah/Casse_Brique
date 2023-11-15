@@ -10,6 +10,6 @@ public:
 
 	InputManager(GameWindow* window);
 	
-	void ButtonPressed();
+	void EventCheck();
 };
 

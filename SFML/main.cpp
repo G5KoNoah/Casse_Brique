@@ -4,18 +4,28 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 int main(int argc, char** argv)
 {
     GameWindow game;
     InputManager inputs(&game) ;
+
+	// sf::SoundBuffer buffer;
+	// if (!buffer.loadFromFile("sound.wav"))
+	// 	return -1;
+
+	// sf::Sound sound;
+	// sound.setBuffer(buffer);
+	// sound.play();
+
     //GameLoop
-    game.LoadLevel1();
+    game.loadLevelFromTxt("level/level1.txt");
 
     while (game.oWindow->isOpen())
     {
         //EVENTS
-        inputs.ButtonPressed();
+        inputs.EventCheck();
 
         //UPDATES
         game.Update();

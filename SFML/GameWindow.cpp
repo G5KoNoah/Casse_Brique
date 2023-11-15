@@ -7,7 +7,11 @@ using namespace std;
 
 GameWindow::GameWindow()
 {
-	
+
+
+
+	string line;
+	int row = 0;
 
 	sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
 	screenW = desktopMode.width;
@@ -20,18 +24,33 @@ GameWindow::GameWindow()
 	oWindow->setFramerateLimit(60);
 
 	
-	borderList["BorderLeft"] = new GameObject(0, 0, gameWidth, screenH, sf::Color::White, 0, 0);//bordure gauche
-	borderList["BorderRight"] = new GameObject(gameWidth * 2, 0, gameWidth, screenH, sf::Color::White, 0, 0);//bordure droite
-	borderList["BorderTop"] = new GameObject(gameWidth, 0, gameWidth, -10, sf::Color::Red, 0, 0);//bordure haut
-	borderList["BorderBottom"] = new GameObject(gameWidth, screenH, gameWidth, 10, sf::Color::Red, 0, 0);//bordure bas
 
-	cannon = new GameObject(screenW / 2 + screenH / 220, screenH - 150, gameWidth / 8, screenH / 8, sf::Color::White, 0.5, 1);//cannon
+	borderList["BorderLeft"] = new GameObject(0, 0, gameWidth, screenH, sf::Color::White, "bg2.png", 0, 0);//bordure gauche
+	borderList["BorderRight"] = new GameObject(gameWidth * 2, 0, gameWidth, screenH, sf::Color::White, "bg1.png", 0, 0);//bordure droite
+	borderList["BorderTop"] = new GameObject(gameWidth, 0, gameWidth, -10, sf::Color::Red, "", 0, 0);//bordure haut
+	borderList["BorderBottom"] = new GameObject(gameWidth, screenH, gameWidth, 10, sf::Color::Red, "", 0, 0);//bordure bas
 
-	ball = new Ball(screenW / 2 + screenH / 220, screenH - 150, screenH / 110, sf::Color::White);//balle
+	cannon = new GameObject(screenW / 2 + screenH / 220, screenH - 150, gameWidth / 8, screenH / 8, sf::Color::White, "cannon.png", 0.5, 1);//cannon
 
+	ball = new Ball(screenW / 2 + screenH / 220, screenH - 150, screenH / 110, sf::Color::White, "ball.png");//balle
 
+	for (const auto& pair : borderList) {
+		pair.second->setObjectTexture(textureMap);
+	}
 
+	cannon->setObjectTexture(textureMap);
+	ball->setObjectTexture(textureMap);
 
+	/*
+	for (int i = 0; i < loadingList.size(); i++) {
+		if (!texture.loadFromFile("img/" + loadingList[i].textureFilename))
+		{
+			std::cout << "erreur texture";
+		}
+		textureCannon.setSmooth(true);
+		loadingList[i].setTexture(texture);
+
+	}
 	if (!textureCannon.loadFromFile("img/cannon.png"))
 	{
 		std::cout << "erreur texture";
@@ -59,8 +78,9 @@ GameWindow::GameWindow()
 	}
 	backGround2.setSmooth(true);
 	borderList["BorderLeft"]->setTexture(backGround2);
-
+	*/
 }
+
 
 void GameWindow::Shoot(){
 
@@ -103,8 +123,8 @@ void GameWindow::Update() {
 			if (pair.first == "BorderBottom") {
 				fire = false;
 				delete ball;
-				ball = new Ball(screenW/2 + screenH / 220, screenH - 150, screenH/110, sf::Color::White);
-				ball->setTexture(textureBall);
+				ball = new Ball(screenW/2 + screenH / 220, screenH - 150, screenH/110, sf::Color::White, "ball.png"); 
+				ball->setObjectTexture(textureMap);
 			}
 		}
 	}
@@ -130,11 +150,33 @@ void GameWindow::Update() {
 
 }
 
-void GameWindow::LoadLevel1(){
-	brickList.push_back(new Brick(gameWidth + gameWidth * 0.1, screenH * 0.3, gameWidth * 0.2, screenH / 20, sf::Color::Green, 0, 0, 4));
-	brickList.push_back(new Brick(gameWidth + gameWidth * 0.7, screenH * 0.3, gameWidth * 0.2, screenH / 20, sf::Color::Green, 0, 0, 4));
 
-	brickList.push_back(new Brick(gameWidth + gameWidth * 0.2, screenH * 0.5, gameWidth * 0.2, screenH / 20, sf::Color::Green, 0, 0, 4));
-	brickList.push_back(new Brick(gameWidth + gameWidth * 0.6, screenH * 0.5, gameWidth * 0.2, screenH / 20, sf::Color::Green, 0, 0, 4));
-	brickList.push_back(new Brick(gameWidth + gameWidth * 0.4, screenH * 0.55, gameWidth * 0.2, screenH / 20, sf::Color::Green, 0, 0, 4));
+bool GameWindow::loadLevelFromTxt(const string& filename) {
+
+	ifstream file(filename);
+	if (!file.is_open()) {
+		std::cout << "Erreur lors de l'ouverture du fichier TXT." << endl;
+		return false;
+	}
+
+	string line;
+	int row = 0;
+
+	while (getline(file, line)) {
+		int lineSize = min(int(line.size()), 10);
+	
+
+		for (size_t i = 0; i < lineSize; ++i) {
+			int life = line[i] - '0';  // Convertir le caractère en entier
+
+			// Ajouter la brique à la rangée
+			brickList.push_back(new Brick(gameWidth + i * gameWidth / 10,screenH/10 + row * 25, gameWidth / 10, 25, sf::Color::White, "brick.png", 0, 0, life));
+			brickList[brickList.size() - 1]->setObjectTexture(textureMap);
+		}
+
+		//  Ajouter la rangée à la liste globale
+		++row;
+	}
+
+	return true;
 }

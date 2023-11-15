@@ -1,11 +1,11 @@
 #include <iostream>
 
 #include "Ball.h"
-Ball::Ball(float posX, float posY, int rad, sf::Color color) :GameObject(posX, posY, rad, color) {
+Ball::Ball(float posX, float posY, int rad, sf::Color color, string filename) :GameObject(posX, posY, rad, color, filename) {
 
 }
 
-void Ball::EnterCollision(){
+void Ball::EnterCollision(string side){
 	Bounce(side);
 }
 
