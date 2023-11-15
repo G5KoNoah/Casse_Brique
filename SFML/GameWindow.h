@@ -31,17 +31,41 @@ public:
     bool fire;
     Ball* ball;
     GameObject* cannon;
+    GameObject* home;
+    GameObject* win;
+    GameObject* lose;
 
+    int currentLevel = 1;
 	std::map<std::string, GameObject*> borderList;
     vector<Brick*> brickList;
 
     sf::Vector2i localPosition;
 
+    sf::Font font;
+    sf::Text text;
+
+    string page = "home";
+
+    int comptDefeat = 1;
+    int condDefeat = 1;
+
 	GameWindow();
 
-    bool loadLevelFromTxt(const string& filename);
+    bool loadLevelFromTxt();
     void Shoot();
+
     void Display();
+    void DisplayHome();
+    void DisplayGame();
+    void DisplayWin();
+    void DisplayLose();
+
     void Update();
+    void ResetBall();
+
+    bool Win();
+    bool Defeat();
+
+    void setCharacter(string txt);
 };
 

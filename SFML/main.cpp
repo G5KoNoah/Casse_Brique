@@ -11,16 +11,9 @@ int main(int argc, char** argv)
     GameWindow game;
     InputManager inputs(&game) ;
 
-	// sf::SoundBuffer buffer;
-	// if (!buffer.loadFromFile("sound.wav"))
-	// 	return -1;
-
-	// sf::Sound sound;
-	// sound.setBuffer(buffer);
-	// sound.play();
 
     //GameLoop
-    game.loadLevelFromTxt("level/level1.txt");
+    game.loadLevelFromTxt();
 
     while (game.oWindow->isOpen())
     {
@@ -28,7 +21,10 @@ int main(int argc, char** argv)
         inputs.EventCheck();
 
         //UPDATES
-        game.Update();
+        if (game.page == "game") {
+            game.Update();
+        }
+
 
         //DRAW
         game.Display();

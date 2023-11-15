@@ -23,7 +23,22 @@ GameWindow::GameWindow()
 	oWindow = new sf::RenderWindow(desktopMode, "Breakout", sf::Style::Default);
 	oWindow->setFramerateLimit(60);
 
-	
+
+	if (!font.loadFromFile("font/font.ttf")) {
+		// Gestion de l'erreur si la police ne peut pas être chargée
+		std::cout << "erreur font";
+	}
+	text.setFont(font);
+
+	setCharacter("BIENVENUE");
+
+	// choix de la couleur du texte
+	text.setFillColor(sf::Color::Red);
+
+	// choix du style du texte
+	text.setStyle(sf::Text::Bold);
+
+	text.setPosition(screenW / 3, screenH / 2);
 
 	borderList["BorderLeft"] = new GameObject(0, 0, gameWidth, screenH, sf::Color::White, "bg2.png", 0, 0);//bordure gauche
 	borderList["BorderRight"] = new GameObject(gameWidth * 2, 0, gameWidth, screenH, sf::Color::White, "bg1.png", 0, 0);//bordure droite
@@ -34,12 +49,21 @@ GameWindow::GameWindow()
 
 	ball = new Ball(screenW / 2 + screenH / 220, screenH - 150, screenH / 110, sf::Color::White, "ball.png");//balle
 
+	home = new GameObject(0, 0, screenW, screenH, sf::Color::White, "home.png", 0, 0);//cannon
+
+	win = new GameObject(0, 0, screenW, screenH, sf::Color::White, "win.png", 0, 0);//cannon
+
+	lose = new GameObject(0, 0, screenW, screenH, sf::Color::White, "lose.png", 0, 0);//cannon
+
 	for (const auto& pair : borderList) {
 		pair.second->setObjectTexture(textureMap);
 	}
 
 	cannon->setObjectTexture(textureMap);
 	ball->setObjectTexture(textureMap);
+	home->setObjectTexture(textureMap);
+	win->setObjectTexture(textureMap);
+	lose->setObjectTexture(textureMap);
 
 	/*
 	for (int i = 0; i < loadingList.size(); i++) {
@@ -92,6 +116,28 @@ void GameWindow::Shoot(){
 
 void GameWindow::Display() {
 	oWindow->clear();
+	if (page == "home") {
+		DisplayHome();
+	}
+	else if (page == "win") {
+		DisplayWin();
+	}
+	else if (page == "lose") {
+		DisplayLose();
+	}
+	else {
+		DisplayGame();
+	}
+	oWindow->display();
+}
+void GameWindow::DisplayHome() {
+	home->Draw(*oWindow);
+	oWindow->draw(text);
+
+}
+
+void GameWindow::DisplayGame() {
+
 
 	
 	ball->Draw(*oWindow);
@@ -104,9 +150,21 @@ void GameWindow::Display() {
 	for (int i = 0; i < brickList.size(); i++) {
 		brickList[i]->Draw(*oWindow);
 	}
-	oWindow->display();
+
 
 }
+
+void GameWindow::DisplayWin() {
+	win->Draw(*oWindow);
+	oWindow->draw(text);
+}
+
+
+void GameWindow::DisplayLose() {
+	lose->Draw(*oWindow);
+	oWindow->draw(text);
+}
+
 
 void GameWindow::Update() {
 	if(localPosition.y<cannon->positionY){
@@ -121,10 +179,8 @@ void GameWindow::Update() {
 	for(const auto& pair : borderList){
 		if (ball->Collision(pair.second)) {
 			if (pair.first == "BorderBottom") {
-				fire = false;
-				delete ball;
-				ball = new Ball(screenW/2 + screenH / 220, screenH - 150, screenH/110, sf::Color::White, "ball.png"); 
-				ball->setObjectTexture(textureMap);
+				comptDefeat += 1;
+				ResetBall();
 			}
 		}
 	}
@@ -147,13 +203,35 @@ void GameWindow::Update() {
 		}
 	}
 
+	if (Win()) {
+		page = "win";
+		setCharacter("LEVEL " + to_string(currentLevel) + " : TERMINE");
+	}
+	else if (Defeat()) {
+		setCharacter("DOMMAGE");
+		page = "lose";
+	}
 
 }
 
+void GameWindow::ResetBall() {
+	fire = false;
+	delete ball;
+	ball = new Ball(screenW / 2 + screenH / 220, screenH - 150, screenH / 110, sf::Color::White, "ball.png");
+	ball->setObjectTexture(textureMap);
+}
 
-bool GameWindow::loadLevelFromTxt(const string& filename) {
+bool GameWindow::loadLevelFromTxt() {
+	string fileName = "level/level"+ to_string(currentLevel) + ".txt";
+	if (brickList.size() != 0) {
+		while (brickList.size() != 0) {
+			int del = brickList.size();
+			delete brickList[del];
+		}
 
-	ifstream file(filename);
+	}
+
+	ifstream file(fileName);
 	if (!file.is_open()) {
 		std::cout << "Erreur lors de l'ouverture du fichier TXT." << endl;
 		return false;
@@ -179,4 +257,26 @@ bool GameWindow::loadLevelFromTxt(const string& filename) {
 	}
 
 	return true;
+}
+
+bool GameWindow::Win() {
+	if (brickList.size()==0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool GameWindow::Defeat() {
+	if (comptDefeat > condDefeat) {
+		return true;
+	}
+	return false;
+}
+
+void GameWindow::setCharacter(string txt) {
+	text.setString(txt);
+	std::cout << txt.size();
+	text.setCharacterSize(((screenW/3)/(txt.size()))*3);
 }

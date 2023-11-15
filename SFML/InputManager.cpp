@@ -15,11 +15,35 @@ void InputManager::EventCheck(){
 
 	while (game->oWindow->pollEvent(oEvent))
 	{
-		if (oEvent.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		if (oEvent.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			game->oWindow->close();
+		}
+
+		else if (oEvent.type == sf::Event::MouseButtonReleased) {
+			if (oEvent.mouseButton.button == sf::Mouse::Left) {
+				if (game->page == "game" && !game->fire) {
+					if (game->localPosition.y < game->cannon->positionY)
+						game->Shoot();
+				}
+				else if (game->page == "win") {
+					game->currentLevel += 1;
+					game->comptDefeat = 1;
+					game->ResetBall();
+					game->loadLevelFromTxt();
+					game->page = "game";
+				}
+				else if (game->page == "home") {
+					game->currentLevel = 1;
+					game->comptDefeat = 1;
+					game->ResetBall();
+					game->page = "game";
+				}
+				else  if (game->page == "lose") {
+					game->page = "home";
+				}
+			}
+		}
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !game->fire) {
-		if (game->localPosition.y < game->cannon->positionY)
-			game->Shoot();
-	}
+
+
 }
