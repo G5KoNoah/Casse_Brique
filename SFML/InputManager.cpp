@@ -27,16 +27,18 @@ void InputManager::EventCheck(){
 				}
 				else if (game->page == "win") {
 					game->currentLevel += 1;
-					game->comptDefeat = 1;
 					game->ResetBall();
-					game->loadLevelFromTxt();
-					game->page = "game";
+					if (game->loadLevelFromTxt()){
+						game->page = "game";
+					}else {
+						game->page = "home";
+					}
 				}
 				else if (game->page == "home") {
 					game->currentLevel = 1;
-					game->comptDefeat = 1;
 					game->ResetBall();
-					game->page = "game";
+					game->page = "game"; 
+					game->loadLevelFromTxt();
 				}
 				else  if (game->page == "lose") {
 					game->page = "home";
@@ -44,6 +46,4 @@ void InputManager::EventCheck(){
 			}
 		}
 	}
-
-
 }

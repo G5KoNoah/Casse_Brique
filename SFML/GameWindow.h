@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+#include "TextCard.h"
 #include "GameObject.h"
 #include "Ball.h"
 #include "Brick.h"
@@ -18,12 +19,6 @@ public:
 
     map<string, sf::Texture> textureMap;
 
-    sf::Texture texture;
-	sf::Texture textureCannon;
-	sf::Texture textureBall;
-	sf::Texture backGround1;
-	sf::Texture backGround2;
-
     int screenW;
 	int screenH;
     int gameWidth;
@@ -35,19 +30,16 @@ public:
     GameObject* win;
     GameObject* lose;
 
-    int currentLevel = 1;
-	std::map<std::string, GameObject*> borderList;
+    int currentLevel;
+    int shotsLeft;
+	std::map<std::string, TextCard*> cardsList;
+    std::map<std::string, GameObject*> borderList;
     vector<Brick*> brickList;
 
     sf::Vector2i localPosition;
 
-    sf::Font font;
-    sf::Text text;
-
     string page = "home";
 
-    int comptDefeat = 1;
-    int condDefeat = 1;
 
 	GameWindow();
 
@@ -55,10 +47,7 @@ public:
     void Shoot();
 
     void Display();
-    void DisplayHome();
     void DisplayGame();
-    void DisplayWin();
-    void DisplayLose();
 
     void Update();
     void ResetBall();
@@ -66,6 +55,5 @@ public:
     bool Win();
     bool Defeat();
 
-    void setCharacter(string txt);
 };
 

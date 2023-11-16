@@ -29,6 +29,7 @@ public:
 	void ObjectMove(float fDeltaTime);
 	void ObjectRotate(sf::Vector2i point);
 	bool Collision(GameObject* touchedObject);
+	bool Interaction(GameObject* touchedObject);
 	virtual void EnterCollision(string side);
 	virtual void StayCollision();
 	virtual void ExitCollision();

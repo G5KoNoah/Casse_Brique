@@ -97,6 +97,11 @@ bool GameObject::Collision(GameObject* touchedObject) {
 
 	return false;
 }
+
+bool GameObject::Interaction(GameObject* touchedObject){
+	return true;
+}
+
 void GameObject::EnterCollision(string side){
 	std::cout << "Start Collision"<<endl;
 }

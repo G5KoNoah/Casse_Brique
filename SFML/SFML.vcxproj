@@ -137,6 +137,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathGeneric.cpp" />
+    <ClCompile Include="TextCard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MathGeneric.h" />
+    <ClInclude Include="TextCard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
