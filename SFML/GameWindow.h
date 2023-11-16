@@ -55,5 +55,6 @@ public:
     bool Win();
     bool Defeat();
 
+
 };
 
